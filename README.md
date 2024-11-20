@@ -1,65 +1,14 @@
-# primitive_types
+# aiken_primitive_types
 
-Write validators in the `validators` folder, and supporting functions in the `lib` folder using `.ak` as a file extension.
+In this project, we're taking a look into 10 Aiken primitive types, they're:
 
-```aiken
-validator my_first_validator {
-  spend(_datum: Option<Data>, _redeemer: Data, _output_reference: Data, _context: Data) {
-    True
-  }
-}
-```
-
-## Building
-
-```sh
-aiken build
-```
-
-## Configuring
-
-**aiken.toml**
-```toml
-[config.default]
-network_id = 41
-```
-
-Or, alternatively, write conditional environment modules under `env`.
-
-## Testing
-
-You can write tests in any module using the `test` keyword. For example:
-
-```aiken
-use config
-
-test foo() {
-  config.network_id + 1 == 42
-}
-```
-
-To run all tests, simply do:
-
-```sh
-aiken check
-```
-
-To run only tests matching the string `foo`, do:
-
-```sh
-aiken check -m foo
-```
-
-## Documentation
-
-If you're writing a library, you might want to generate an HTML documentation for it.
-
-Use:
-
-```sh
-aiken docs
-```
-
-## Resources
-
-Find more on the [Aiken's user manual](https://aiken-lang.org).
+- [`Int`](https://aiken-lang.org/language-tour/primitive-types#int) - Aiken's number type. It's an arbitrary sized integer.
+- [`ByteArray`](https://aiken-lang.org/language-tour/primitive-types#bytearray) - A ByteArray is an array of bytes.
+- [`String`](https://aiken-lang.org/language-tour/primitive-types#string) - The use case for strings is extremely narrow in Aiken and on-chain code.
+- [`Bool`](https://aiken-lang.org/language-tour/primitive-types#bool) - A Bool is a boolean value that can be either True or False.
+- [`Tuple`](https://aiken-lang.org/language-tour/primitive-types#tuples) - Tuples are useful for grouping values.
+- [`List`](https://aiken-lang.org/language-tour/primitive-types#list) - Lists are ordered collections of values.
+- [`Option`](https://aiken-lang.org/language-tour/primitive-types#option) - Options are used in situations where you need optional values.
+- [`Void`](https://aiken-lang.org/language-tour/primitive-types#void) - Void is a type representing the nullary constructor.
+- [`Never`](https://aiken-lang.org/language-tour/primitive-types#never) - In some rare cases, it is needed to refer to an Option that can only ever be None.
+- [`Data`](https://aiken-lang.org/language-tour/primitive-types#data) - A Data is an opaque compound type that can represent any possible user-defined type.
