@@ -1,6 +1,15 @@
 use aiken/builtin
 use aiken/crypto.{VerificationKeyHash}
+use cardano/address.{Script, VerificationKey}
+use cardano/address/credential
 use cardano/assets.{Lovelace}
+use cardano/governance.{
+  ConstitutionalCommitteeMember, DelegateRepresentative, StakePool,
+}
+use cardano/governance/voter
+use cardano/transaction.{Mint, OutputReference, Spend}
+use cardano/transaction/output_reference
+use cardano/transaction/script_purpose
 
 test integer() {
   // let-bindings: https://aiken-lang.org/language-tour/variables-and-constants#variables--let-bindings
@@ -132,8 +141,8 @@ test tuple() {
 
   // destructuring: https://aiken-lang.org/language-tour/custom-types#destructuring
   let (a, _) = t2
-  let (_a, b, _c) = t3
-  let (_1, _2, _3, d) = t4
+  let (_, b, _) = t3
+  let (_, _, _, d) = t4
 
   and {
     a == 1,
@@ -181,11 +190,33 @@ test option() {
   expect None = nothing
 }
 
+// ## Ordering
+
+test ordering() {
+  // cardano/address/credential.{compare}: https://aiken-lang.github.io/stdlib/cardano/address/credential.html#compare
+  let key = VerificationKey("VerificationKeyHash")
+  let script = Script("ScriptHash")
+
+  // cardano/transaction/output_reference.{compare}: https://aiken-lang.github.io/stdlib/cardano/transaction/output_reference.html#compare
+  let o_ref = OutputReference("transaction_id", 0)
+
+  // cardano/transaction/script_purpose.{compare}: https://aiken-lang.github.io/stdlib/cardano/transaction/script_purpose.html#compare
+  let mint = Mint("PolicyId")
+  let spend = Spend(o_ref)
+
+  // type Ordering { Less Equal Greater }: https://aiken-lang.github.io/prelude/aiken.html#Ordering
+  and {
+    script_purpose.compare(mint, spend) == Less,
+    output_reference.compare(o_ref, o_ref) == Equal,
+    credential.compare(key, script) == Greater,
+  }
+}
+
 // ## Never and Void
 
 test never_void() {
   and {
-    // aiken/builtin: https://aiken-lang.github.io/prelude/aiken/builtin.html#choose_void
+    // aiken/builtin.{choose_void}: https://aiken-lang.github.io/prelude/aiken/builtin.html#choose_void
     builtin.choose_void(Never, True),
     builtin.choose_void(Void, True),
     builtin.choose_void(Thing, True),
