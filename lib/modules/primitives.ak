@@ -3,10 +3,6 @@ use aiken/crypto.{VerificationKeyHash}
 use cardano/address.{Script, VerificationKey}
 use cardano/address/credential
 use cardano/assets.{Lovelace}
-use cardano/governance.{
-  ConstitutionalCommitteeMember, DelegateRepresentative, StakePool,
-}
-use cardano/governance/voter
 use cardano/transaction.{Mint, OutputReference, Spend}
 use cardano/transaction/output_reference
 use cardano/transaction/script_purpose
